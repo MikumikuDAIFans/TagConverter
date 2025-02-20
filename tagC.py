@@ -75,6 +75,16 @@ def process_text():
     # 获取输入文本
     input_text = inputTextEdit.toPlainText()
 
+    # 新增功能：替换含中文的行为三个换行符
+    def replace_chinese_lines(text):
+        # 匹配包含中文字符的行（包括中日韩统一表意文字）
+        chinese_pattern = re.compile(r'^.*[\u4e00-\u9fff\u3400-\u4dbf\U00020000-\U0002a6df].*$', re.MULTILINE)
+        # 替换匹配行为三个换行符（创建两个空行）
+        return chinese_pattern.sub('\n\n\n', text)
+
+    # 处理中文行（在最前端执行）
+    modified_text = replace_chinese_lines(input_text)
+
     # 处理中括号
     def convert_brackets(input_str):
         pattern = r'\[([^\[\]]+)\]'
@@ -94,26 +104,21 @@ def process_text():
         return input_str
 
     # 执行转换
-    intermediate = convert_brackets(input_text)
+    intermediate = convert_brackets(modified_text)
     final_result = convert_curly_braces(intermediate)
 
-    # 新增分组处理功能
-    # 步骤1：按两个以上换行分割段落
+    # 分组处理功能
     groups = re.split(r'\n{2,}', final_result.strip())
-    
-    # 步骤2：处理每个段落
-    processed_groups = []
-    for group in groups:
-        if group.strip():  # 过滤空段落
-            # 合并段落内的换行为空格并去除首尾空格
-            processed = group.replace('\n', ' ').strip()
-            processed_groups.append(processed)
-    
-    # 步骤3：用单换行连接所有段落
+    processed_groups = [
+        group.replace('\n', ' ').strip()
+        for group in groups 
+        if group.strip()
+    ]
     final_output = '\n'.join(processed_groups)
 
     # 显示结果
     outputTextEdit.setPlainText(final_output)
+
 
 # 绑定按钮事件
 button.clicked.connect(process_text)
