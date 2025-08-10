@@ -3,7 +3,12 @@
 ## 简介
 Tag转换器是一款基于 PySide6 的桌面应用，支持 NAI（NovelAI）与 SD（Stable Diffusion）标签格式的相互转换，并提供丰富的标签预处理功能。界面美观，支持拖拽导入、批量处理、权重算法切换等。
 
+![Snipaste_2025-08-10_22-21-56](D:\GitHubLocalRepositories\TagConverter\Snipaste_2025-08-10_22-21-56.png)
+
+![Snipaste_2025-08-10_22-22-31](D:\GitHubLocalRepositories\TagConverter\Snipaste_2025-08-10_22-22-31.png)
+
 ## 主要功能
+
 - **NAI→SD / SD→NAI 标签格式互转**：一键切换转换方向，支持括号权重与浮点权重两种算法。
 - **精确权重转换**：可选精确到三位小数，适合高精度需求。
 - **批量标签预处理**：
